@@ -38,6 +38,7 @@ const App = () => {
     <div className="app">
       <Logo />
       <FlashCards />
+      <Footer/>
     </div>
   );
 };
@@ -47,38 +48,24 @@ function Logo() {
 }
 
 function FlashCards() {
+  const [selectedID, setSelectedID] = useState(null);
   return (
-    <div>
-      <ul className="flashcards">
-        {questions.map((card) => (
-          <Card card={card} key={card.id} />
-        ))}
-      </ul>
+    <div className="flashcards">
+      {questions.map((ques) => (
+        <div key={ques.id} className={ques.id === selectedID ? "selected":""} onClick={() => setSelectedID(ques.id === selectedID ? null: ques.id)}>
+          <p>
+            {ques.id === selectedID ? ques.answer: ques.question}
+          </p>
+        </div>
+      ))}
     </div>
   );
 }
 
-function Card({ card }) {
-  const [selected, setSelected] = useState(false);
-  return (
-    <li key={card.id}>
-      {selected ? (
-        <div
-          className={selected ? "selected" : ""}
-          onClick={() => setSelected(!selected)}
-        >
-          {card.answer}
-        </div>
-      ) : (
-        <div
-          className={selected ? "selected" : ""}
-          onClick={() => setSelected(!selected)}
-        >
-          {card.question}
-        </div>
-      )}
-    </li>
-  );
+function Footer(){
+  return <div className="footer">
+    Developed by Sujahath &copy; 2024
+  </div>
 }
 
 export default App;
